@@ -3,6 +3,8 @@ let states_api = require('./routes/states')
 
 let app = express() 
 
+app.use(express.json())   // enable parsing JSON sent with requests
+
 app.use('/api', states_api)
 
 app.use(function(req, res, next) {
