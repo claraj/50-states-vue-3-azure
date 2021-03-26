@@ -7,7 +7,7 @@
     <p v-else>You have not visited this state</p>
 
     <div id="map-container">
-      <l-map v-bind:zoom="state.zoom" v-bind:center="mapCenter">
+      <l-map ref="map" @ready="onMapReady" v-bind:zoom="state.zoom" v-bind:center="mapCenter">
         <l-tile-layer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors">
@@ -20,23 +20,40 @@
 <script>
 
 import { LMap, LTileLayer } from '@vue-leaflet/vue-leaflet'  
+//import { LMap, LTileLayer } from 'leaflet/dist/leaflet-src.esm'  
 
 export default {
   name: 'StateMap',
   components: { LMap, LTileLayer },
   data() {
     return {
-      state: {}
+      state: {},
+      mapReady: false
     }
   },
   mounted() {
     this.state.name = this.$route.params.state
-    this.fetchStateData()
+    this.$nextTick( () => {
+      this.fetchStateData()
+    })
   },
   methods: {
+    onMapReady() {
+      // Ensure map is showing the correct location - if the data is fetched 
+      // from the API before the map is ready, the view may not update 
+      this.$refs.map.leafletObject.setView(this.mapCenter, this.state.zoom)
+    },
     fetchStateData() {
       this.$stateService.getOneState(this.state.name).then( state => {
         this.state = state
+      }).catch( err => {
+        if (err.response && err.response.status === 404) { // Not found
+          this.state.name = '?'   // todo - think about the best way to communicate this to the user
+        } 
+        else {  // a different error 
+          alert('Sorry, error fetching data about this state')
+          console.error(err)
+        }
       })
     }
   },
