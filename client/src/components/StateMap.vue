@@ -1,6 +1,6 @@
 
 <template>
-  <div class="state-map">
+  <div class="state-map" v-if="state.name">
     <h2>The state of {{ state.name }}</h2>
 
     <p v-if="state.visited">You have visited this state</p>
@@ -20,15 +20,13 @@
 <script>
 
 import { LMap, LTileLayer } from '@vue-leaflet/vue-leaflet'  
-//import { LMap, LTileLayer } from 'leaflet/dist/leaflet-src.esm'  
 
 export default {
   name: 'StateMap',
   components: { LMap, LTileLayer },
   data() {
     return {
-      state: {},
-      mapReady: false
+      state: {}
     }
   },
   mounted() {
