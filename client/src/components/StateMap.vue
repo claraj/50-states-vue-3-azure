@@ -7,7 +7,7 @@
     <p v-else>You have not visited this state</p>
 
     <div id="map-container">
-      <l-map ref="map" @ready="onMapReady" v-bind:zoom="state.zoom" v-bind:center="mapCenter">
+      <l-map ref="map" v-on:ready="onMapReady" v-bind:zoom="state.zoom" v-bind:center="mapCenter">
         <l-tile-layer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors">
@@ -31,9 +31,7 @@ export default {
   },
   mounted() {
     this.state.name = this.$route.params.state
-    this.$nextTick( () => {
-      this.fetchStateData()
-    })
+    this.fetchStateData()
   },
   methods: {
     onMapReady() {
@@ -44,9 +42,10 @@ export default {
     fetchStateData() {
       this.$stateService.getOneState(this.state.name).then( state => {
         this.state = state
-      }).catch( err => {
+      })
+      .catch( err => {
         if (err.response && err.response.status === 404) { // Not found
-          this.state.name = '?'   // todo - think about the best way to communicate this to the user
+          this.state.name = '?'   // TODO - think about the best way to communicate this to the user
         } 
         else {  // a different error 
           alert('Sorry, error fetching data about this state')
