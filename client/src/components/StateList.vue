@@ -2,8 +2,7 @@
 
 <div>
   <state-summary 
-    v-bind:totalVisited="totalVisited"
-    v-bind:totalStates="totalStates"
+    v-bind:states="states"
   ></state-summary>
 
   <div class="state-list-container">
@@ -48,20 +47,6 @@ export default {
               alert('Sorry, unable to update this state')
               console.error(err)
           })
-      }
-  },
-  computed: {
-      totalStates() {
-          return this.states.length
-      },
-      totalVisited() {
-          let visitedCount = 0
-          this.states.forEach( state => {
-              if (state.visited) {
-                  visitedCount++
-              }
-          })
-          return visitedCount
       }
   }
 }

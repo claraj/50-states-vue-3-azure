@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-cloak>
     <page-header></page-header>
     <router-view></router-view>
     <page-footer></page-footer>
@@ -29,4 +29,9 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
+[v-cloak] {
+  display: none;
+ }
+
 </style>
