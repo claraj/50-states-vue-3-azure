@@ -43,13 +43,12 @@ export default {
    height: 8rem;
    width: 10rem;
    border: 1px gainsboro solid;
-   border-radius: 0.3rem;
+   border-radius: .3rem;
    background-color: whitesmoke;
 }
 
 .visit-state {
     margin: 1rem;
-    text-align: center;
 }
 
 .map-icon {
