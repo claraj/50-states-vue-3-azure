@@ -2,7 +2,7 @@
   <div class="state-info">
     <span class="state-name">{{ state.name }}</span>
     <div>
-      <input class="visit-state" type="checkbox" v-model="visited">
+      <input class="visit-state" type="checkbox" v-model="visited" v-on:change="updateVisited">
     </div>
 
     <div>
@@ -27,8 +27,8 @@ export default {
       visited: this.state.visited  // copied from prop
     }
   },
-  watch: {
-    visited() {
+  methods: {
+    updateVisited() {
       this.$emit('update-visited', this.state.name, this.visited)
     }
   }
@@ -39,7 +39,7 @@ export default {
 <style scoped>
 
 .state-info {
-   padding: 1em;
+   padding: 1rem;
    height: 8rem;
    width: 10rem;
    border: 1px gainsboro solid;

@@ -61,7 +61,7 @@ export default {
 }
 
 .state-container {
-    margin: 1em;
+    margin: 1rem;
 }
 </style>
 
