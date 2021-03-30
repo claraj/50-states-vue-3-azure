@@ -42,7 +42,7 @@ export default {
 <style scoped>
 
 #all-visited-message {
-    color: brown;
+    color: purple;
     font-weight: 600;
 }
 
