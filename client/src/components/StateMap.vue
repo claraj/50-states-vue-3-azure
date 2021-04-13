@@ -1,13 +1,13 @@
 
 <template>
-  <div class="state-map" v-if="state.name">
+  <div class="state-map">
     <h2>The state of {{ state.name }}</h2>
 
     <p v-if="state.visited">You have visited this state</p>
     <p v-else>You have not visited this state</p>
 
-    <div id="map-container">
-      <l-map ref="map" v-on:ready="setMapView" v-bind:zoom="state.zoom" v-bind:center="mapCenter">
+    <div id="map-container" v-if="dataReady">  <!-- only show map if data is available from API -->
+      <l-map ref="map" v-on:ready="onMapReady" v-bind:zoom="state.zoom" v-bind:center="mapCenter">
         <l-tile-layer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors">
@@ -26,7 +26,9 @@ export default {
   components: { LMap, LTileLayer },
   data() {
     return {
-      state: {}
+      state: {},
+      dataReady: false,
+      mapReady: false
     }
   },
   mounted() {
@@ -34,18 +36,21 @@ export default {
     this.fetchStateData()
   },
   methods: {
-    setMapView() {
-      // Ensure map is showing the correct location - if the data is fetched 
-      // from the API before the map is ready, the view may not update 
+    onMapReady() {
       this.mapReady = true
-      this.$refs.map.leafletObject.setView(this.mapCenter, this.state.zoom)
+      this.setMapView()
+    },
+    setMapView() {
+      // Ensure map shows correct location, but only if data is ready and map is also ready. 
+      if (this.dataReady && this.mapReady) {
+        this.$refs.map.leafletObject.setView(this.mapCenter, this.state.zoom)
+      }
     },
     fetchStateData() {
       this.$stateService.getOneState(this.state.name).then( state => {
         this.state = state
-        if (this.mapReady) {
-          this.setMapView()
-        }
+        this.dataReady = true 
+        this.setMapView()
       })
       .catch( err => {
         if (err.response && err.response.status === 404) { // Not found
@@ -60,12 +65,7 @@ export default {
   },
   computed: {
       mapCenter() {
-          if (!this.state.lat || !this.state.lon) {
-              return [40, -80]  // roughly the center of the US
-
-          } else {
-              return [this.state.lat, this.state.lon]
-          }
+          return [this.state.lat, this.state.lon]
       }
   }
 }
