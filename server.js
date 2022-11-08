@@ -20,6 +20,6 @@ app.use(function(err, req, res, next) {
 })
 
 let server = app.listen(process.env.PORT || 3000, function() {
-    console.log('App running on port', server.address().port)
+    console.log('Express server running on port', server.address().port)
 })
 
