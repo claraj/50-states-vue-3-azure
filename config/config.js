@@ -8,14 +8,7 @@ module.exports = {
     "database": "YOUR_DATABASE",
     "username": "YOUR_USER",
     "password": process.env.DB_PASSWORD,
-    "dialect": "mssql",
-    "ssl": true,
-    "dialectOptions": {
-      "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
-      }
-    }
+    "dialect": "mssql"
   }
 }
 
