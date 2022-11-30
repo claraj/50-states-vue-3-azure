@@ -1,6 +1,4 @@
 node_modules
-# The local SQLite database
-states.db
 # Editor files
 .vscode
 .idea
