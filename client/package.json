@@ -7,16 +7,18 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@vue-leaflet/vue-leaflet": "^0.6.0",
-    "axios": "^0.21.1",
-    "core-js": "^3.6.5",
-    "leaflet": "^1.7.1",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.5"
+    "@vue-leaflet/vue-leaflet": "^0.9.0",
+    "axios": "^1.4.0",
+    "core-js": "^3.30.1",
+    "leaflet": "^1.9.3",
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0"
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "webpack": "5.81.0"
   }
 }
+
+
